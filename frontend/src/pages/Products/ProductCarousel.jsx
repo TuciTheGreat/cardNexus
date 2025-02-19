@@ -4,110 +4,121 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import moment from "moment";
-import {
-    FaBox,
-    FaClock,
-    FaShoppingCart,
-    FaStar,
-    FaStore,
-} from "react-icons/fa";
+import { FaBox, FaClock, FaShoppingCart, FaStar, FaStore } from "react-icons/fa";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+
+// Custom Arrow Components
+const CustomPrevArrow = ({ onClick }) => (
+  <button
+    className="absolute top-1/2 -translate-y-1/2 left-2 sm:left-4 z-10 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75"
+    onClick={onClick}
+  >
+    <FaChevronLeft className="text-xl sm:text-2xl" />
+  </button>
+);
+
+const CustomNextArrow = ({ onClick }) => (
+  <button
+    className="absolute top-1/2 -translate-y-1/2 right-2 sm:right-4 z-10 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75"
+    onClick={onClick}
+  >
+    <FaChevronRight className="text-xl sm:text-2xl" />
+  </button>
+);
 
 const ProductCarousel = () => {
-    const { data: products, isLoading, error } = useGetTopProductsQuery();
+  const { data: products, isLoading, error } = useGetTopProductsQuery();
 
-    const settings = {
-        dots: false,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        arrows: true,
-        autoplay: true,
-        autoplaySpeed: 3000,
-    };
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: true,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    prevArrow: <CustomPrevArrow />,
+    nextArrow: <CustomNextArrow />,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
 
-    return (
-        <div className="mb-4 xl:block lg:block md:block">
-            {isLoading ? null : error ? (
-                <Message variant="danger">
-                    {error?.data?.message || error.message}
-                </Message>
-            ) : (
-                <Slider 
-                    { ...settings } 
-                    className="xl:w-[50rem] lg:w-[50rem] md:w-[56rem] sm:w-[40rem] sm:block"    
-                >
-                    {
-                        products.map(
-                            ({
-                                image, 
-                                _id, 
-                                name, 
-                                price, 
-                                description, 
-                                cType, 
-                                createdAt, 
-                                numReviews,
-                                rating,
-                                quantity,
-                                countInStock,
-                            }) => (
-                                <div key={_id}>
-                                    <img 
-                                        src={image} 
-                                        alt={name}
-                                        className="rounded-lg h-[40rem] mx-auto my-6"
-                                    />
+  return (
+    <div className="mb-4 w-full max-w-[1000px] mx-auto relative sm:w-[90%] md:w-[80%] lg:w-[100%] sm:ml-2 md:ml-4 lg:ml-6">
+      {isLoading ? null : error ? (
+        <Message variant="danger">{error?.data?.message || error.message}</Message>
+      ) : (
+        <Slider {...settings} className="w-full relative">
+          {products.map((product) => (
+            <div key={product._id} className="bg-gray-900 text-white p-6 rounded-lg shadow-lg">
+              {/* Product Image */}
+              <img
+                src={product.image}
+                alt={product.name}
+                className="rounded-lg w-full h-[400px] object-contain sm:h-[250px] md:h-[300px] lg:h-[400px]"
+              />
 
-                                    <div className="flex justify-between w-[20rem]">
-                                        <div className="one">
-                                            <h2>{name}</h2>
-                                            <p>$ {price}</p> <br /> <br />
-                                            <p className="w-[25rem]">
-                                                {description.substring(0, 170)}...
-                                            </p>
-                                        </div>
+              {/* Product Info */}
+              <div className="mt-4 text-left">
+                <h2 className="text-lg sm:text-xl font-bold">{product.name}</h2>
+                <p className="text-pink-400 text-sm sm:text-base font-semibold">${product.price}</p>
+                <p className="text-gray-300 text-xs sm:text-sm mt-2">
+                  {product.description.substring(0, 170)}...
+                </p>
+              </div>
 
-                                        <div className="flex justify-between w-[20rem]">
-                                            <div className="one">
-                                                <h1 className="flex items-center mb-6 w-[15rem]">
-                                                    <FaStore className="mr-2 text-white" /> Cardtype: {cType}
-                                                </h1>
-                                                <h1 className="flex items-center mb-6 w-[15rem]">
-                                                    <FaClock className="mr-2 text-white" /> Addedd:{" "}
-                                                    {moment(createdAt).fromNow()}
-                                                </h1>
-                                                <h1 className="flex items-center mb-6 w-[8rem]">
-                                                    <FaStar className="mr-2 text-white" /> Reviews:{" "}
-                                                    {numReviews}
-                                                </h1>
-                                            </div>
+              {/* Product Details */}
+              <div className="mt-4 flex flex-wrap justify-between text-xs sm:text-sm text-gray-400">
+                <div className="flex items-center">
+                  <FaStore className="mr-2 text-pink-400" /> Type: {product.cType}
+                </div>
+                <div className="flex items-center">
+                  <FaClock className="mr-2 text-blue-400" /> Added: {moment(product.createdAt).fromNow()}
+                </div>
+              </div>
 
-                                            <div className="two">
-                                                <h1 className="flex items-center mb-6 w-[10rem]">
-                                                    <FaStar className="mr-2 text-white" /> Ratings:
-                                                    {Math.round(rating)}
-                                                </h1>
-                                                <h1 className="flex items-center mb-6 w-[10rem]">
-                                                    <FaShoppingCart className="mr-2 text-white" />{" "}
-                                                    Quantity:
-                                                    {quantity}
-                                                </h1>
-                                                <h1 className="flex items-center mb-6 w-[10rem]">
-                                                    <FaBox className="mr-2 text-white" /> In Stock:
-                                                    {countInStock}
-                                                </h1>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            )
-                    )}
-                </Slider>
-            )}
-        </div>
-    );
+              <div className="mt-4 flex flex-wrap justify-between text-xs sm:text-sm text-gray-400">
+                <div className="flex items-center">
+                  <FaStar className="mr-2 text-yellow-400" /> Reviews: {product.numReviews}
+                </div>
+                <div className="flex items-center">
+                  <FaStar className="mr-2 text-yellow-400" /> Rating: {Math.round(product.rating)}
+                </div>
+                <div className="flex items-center">
+                  <FaShoppingCart className="mr-2 text-green-400" /> Quantity: {product.quantity}
+                </div>
+                <div className="flex items-center">
+                  <FaBox className="mr-2 text-red-400" /> In Stock: {product.countInStock}
+                </div>
+              </div>
+            </div>
+          ))}
+        </Slider>
+      )}
+    </div>
+  );
 };
 
 export default ProductCarousel;

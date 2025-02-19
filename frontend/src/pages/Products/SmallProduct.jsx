@@ -2,32 +2,26 @@ import { Link } from "react-router-dom";
 import HeartIcon from "./HeartIcon";
 
 const SmallProduct = ({ product }) => {
-    return (
-        <div className="w-[20rem] ml-[2rem] p-3">
-            <div className="relative">
-                <img 
-                    src={product.image} 
-                    alt={product.name} 
-                    className="h-96 rounded" 
-                />
-                <div className="ml-[17rem]">
-                    <HeartIcon product={product} />
-                </div>
-            </div>
-
-                <div className="p-4">
-                    <Link to={`/product/${product._id}`}>
-                        <h2 className="flex justify-between items-enter">
-                            <div>{product.name}</div>
-                            <span className="bg-slate-700 text-pink-300 text-sm font-medium mr-2 
-                            px-2.5 py-0.5 rounded-full dark:bg-pink-900 dark:text-pink-300">
-                                $ {product.price}
-                            </span>
-                        </h2>
-                    </Link>
-                </div>
-            </div>
-    );
+  return (
+    <div className="w-full max-w-[220px] sm:max-w-[250px] lg:max-w-[280px] p-3 bg-gray-800 rounded-lg shadow-md flex flex-col sm:ml-2 md:ml-4 lg:ml-6">
+      <div className="relative flex-shrink-0">
+        <img
+          src={product.image}
+          alt={product.name}
+          className="h-[200px] w-full object-contain rounded-md" // Ensuring full image display
+        />
+        <div className="absolute top-2 right-2">
+          <HeartIcon product={product} />
+        </div>
+      </div>
+      <div className="p-3">
+        <Link to={`/product/${product._id}`} className="block text-lg font-bold">
+          {product.name}
+        </Link>
+        <span className="text-red-400 text-sm font-medium">${product.price}</span>
+      </div>
+    </div>
+  );
 };
 
 export default SmallProduct;
