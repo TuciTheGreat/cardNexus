@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
     AiOutlineHome,
     AiOutlineShopping,
@@ -12,12 +12,13 @@ import { useNavigate } from "react-router-dom";
 import "./Navigation.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useLogoutMutation } from "../../redux/api/usersApiSlice";
-import {logout} from "../../redux/features/auth/authSlice";
+import { logout } from "../../redux/features/auth/authSlice";
 import FavoritesCount from "../Products/FavoritesCount";
 
 
 const Navigation = () => {
-    const {userInfo} = useSelector(state => state.auth);
+    const { userInfo } = useSelector((state) => state.auth);
+    const { cartItems } = useSelector((state) => state.cart);
 
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [showSidebar, setShowSidebar] = useState(false);
@@ -27,12 +28,23 @@ const Navigation = () => {
     };
 
     const toggleSidebar = () => {
-        setShowSidebar(!showSidebar);
+        setShowSidebar((prev) => !prev);
     };
 
-    const closeSidebar = () => {
-        setShowSidebar(false);
-    };
+    const closeSidebar = (e) => {
+      if (!e.target.closest("#navigation-container") && !e.target.closest("#hamburger-menu")) {
+          setShowSidebar(false);
+      }
+  };
+
+  useEffect(() => {
+      if (showSidebar) {
+          document.addEventListener("click", closeSidebar);
+      } else {
+          document.removeEventListener("click", closeSidebar);
+      }
+      return () => document.removeEventListener("click", closeSidebar);
+  }, [showSidebar]);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -51,14 +63,22 @@ const Navigation = () => {
 
 
     return( 
-        <div 
-          style={{zIndex: 999}}
-          className={`${
-            showSidebar ? "hidden" : "flex"
-          } xl:flex lg:flex md:hidden sm:hidden flex-col justify-between p-4
-        text-white bg-black w-[4%] hover:w-[15%] h-[100vh] fixed`}
-          id="navigation-container"            
-        >
+      <>
+      {/* Hamburger Button */}
+      <button 
+                id="hamburger-menu"
+                onClick={toggleSidebar} 
+                className="fixed top-4 left-4 z-50 block xl:hidden lg:block md:block bg-black text-white px-5 py-3 text-2xl rounded-md"
+            >
+                ☰
+            </button>
+
+            {/* Sidebar */}
+            <div 
+                style={{ zIndex: 999 }}
+                className={`fixed top-0 left-0 h-full bg-black text-white transition-transform duration-500 ease-in-out w-[15%] lg:w-[20%] md:w-[25%] xl:w-[4%] hover:w-[15%] p-4 flex flex-col justify-between ${showSidebar ? "translate-x-0" : "-translate-x-full xl:translate-x-0"}`}
+                id="navigation-container"
+            >
             <div className="flex flex-col justify-center space-y-4">
                 <Link 
                   to="/"
@@ -82,6 +102,16 @@ const Navigation = () => {
                   <div className="flex items-center transition-transform transform hover:translate-x-2">
                     <AiOutlineShoppingCart className="mr-2 mt-[3rem]" size={26} />
                     <span className="hidden nav-item-name mt-[3rem]">CART</span>{" "}
+                  </div>
+
+                  <div className="absolute top-9">
+                    {cartItems.length > 0 && (
+                      <span>
+                        <span className="px-1 py-0 text-sm text-white bg-pink-500 rounded-full">
+                          {cartItems.reduce((a, c) => a + c.qty, 0)}
+                        </span>
+                      </span>
+                    )}
                   </div>
                 </Link>
 
@@ -217,6 +247,7 @@ const Navigation = () => {
               )}         
         </div>
       </div>
+      </>
     );
 };
 
