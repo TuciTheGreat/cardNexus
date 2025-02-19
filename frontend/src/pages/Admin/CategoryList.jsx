@@ -11,9 +11,8 @@ import CategoryForm from "../../components/CategoryForm";
 import Modal from "../../components/Modal";
 import AdminMenu from "./AdminMenu";
 
-
 const CategoryList = () => {
-    const {data: categories} = useFetchCategoriesQuery();
+    const { data: categories } = useFetchCategoriesQuery();
     const [name, setName] = useState("");
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [updatingName, setUpdatingName] = useState("");
@@ -24,15 +23,14 @@ const CategoryList = () => {
     const [deleteCategory] = useDeleteCategoryMutation();
 
     const handleCreateCategory = async (e) => {
-        e.preventDefault()
-
+        e.preventDefault();
         if (!name) {
             toast.error("Category name is required");
             return;
         }
 
         try {
-            const result = await createCategory({name}).unwrap();
+            const result = await createCategory({ name }).unwrap();
             if (result.error) {
                 toast.error(result.error);
             } else {
@@ -47,7 +45,6 @@ const CategoryList = () => {
 
     const handleUpdateCategory = async (e) => {
         e.preventDefault();
-
         if (!updatingName) {
             toast.error("Category name is required");
             return;
@@ -56,8 +53,8 @@ const CategoryList = () => {
         try {
             const result = await updateCategory({
                 categoryId: selectedCategory._id,
-                updatedCategory: { 
-                    name: updatingName, 
+                updatedCategory: {
+                    name: updatingName,
                 },
             }).unwrap();
 
@@ -91,54 +88,53 @@ const CategoryList = () => {
         }
     };
 
+    return (
+        <div className="flex flex-col md:flex-row w-full">
+            {/* Admin Menu */}
+            <div className="ml-[10rem] flex flex-col md:flex-row z-10">
+                <AdminMenu />
+            </div>
 
-  return (
-    <div className="ml-[10rem] flex flex-col md:flex-row">
-        <AdminMenu />
-        <div className="md:w-3/4 p-3">
-            <div className="h-12">Manage Categories</div>
-            <CategoryForm 
-                value={name}
-                setValue={setName}
-                handleSubmit={handleCreateCategory}
-            />
-            <br />
-            <hr />
+            {/* Main Content */}
+            <div className="w-full p-4 mx-auto max-w-screen-xl">
+                <div className="text-2xl font-semibold mb-6 text-center">Manage Categories</div>
 
-            <div className="flex flex-wrap">
-                {categories?.map((category) => (
-                    <div key={category._id}>
-                        <button 
-                            className="bg-zinc-900 border border-pink-500 text-pink-500 py-2 px-4 rounded-lg m-3
-                            hover:bg-pink-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-pink-500 
-                            focus:ring-opacity-50"
-                            onClick={() => {
-                                {
+                {/* Category Form */}
+                <CategoryForm value={name} setValue={setName} handleSubmit={handleCreateCategory} />
+                <br />
+                <hr className="my-6" />
+
+                {/* Category List */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mt-6">
+                    {categories?.map((category) => (
+                        <div key={category._id} className="w-full">
+                            <button
+                                className="bg-zinc-900 border border-pink-500 text-pink-500 py-3 px-5 rounded-lg w-full transition transform duration-200 hover:scale-105 hover:bg-pink-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50"
+                                onClick={() => {
                                     setModalVisible(true);
                                     setSelectedCategory(category);
                                     setUpdatingName(category.name);
-                                }
-                            }}
-                        >
-                            {category.name}
-                        </button>
-                    </div>
-                ))}
+                                }}
+                            >
+                                <span className="text-lg font-medium">{category.name}</span>
+                            </button>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Modal */}
+                <Modal isOpen={modalVisible} onClose={() => setModalVisible(false)}>
+                    <CategoryForm
+                        value={updatingName}
+                        setValue={(value) => setUpdatingName(value)}
+                        handleSubmit={handleUpdateCategory}
+                        buttonText="Update"
+                        handleDelete={handleDeleteCategory}
+                    />
+                </Modal>
             </div>
-            
-            <Modal isOpen={modalVisible} onClose={() => setModalVisible(false)}>
-                <CategoryForm 
-                    value={updatingName} 
-                    setValue={value => setUpdatingName(value)}
-                    handleSubmit={handleUpdateCategory}
-                    buttonText="Update"
-                    handleDelete={handleDeleteCategory}
-                /> 
-            </Modal>
         </div>
-    </div>
-  );
+    );
 };
 
 export default CategoryList;
-
