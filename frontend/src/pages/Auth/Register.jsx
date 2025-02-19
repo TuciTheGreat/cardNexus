@@ -15,7 +15,7 @@ const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [register, {isLoading}] = useRegisterMutation();
+  const [register, { isLoading }] = useRegisterMutation();
   const { userInfo } = useSelector((state) => state.auth);
 
   const { search } = useLocation();
@@ -30,10 +30,8 @@ const Register = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-
-
-    if (password != confirmPassword) {
-      toast.error("Password do not match");
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
     } else {
       try {
         const res = await register({ username, email, password }).unwrap();
@@ -41,113 +39,82 @@ const Register = () => {
         navigate(redirect);
         toast.success("User successfully registered");
       } catch (error) {
-        console.log(error);
-        toast.error(error.data.message);
+        toast.error(error?.data?.message || "An error occurred");
       }
     }
   };
 
-
-  return ( 
-    <section className="pl-[10rem] flex flex-wrap">
-      <div className="mr-[4rem] mt-[5rem]">
-        <h1 className="text-2xl font-semibold mb-4 text-white">Register</h1>
-
-        <form onSubmit={submitHandler} className="container w-[40rem]">
-          <div className="my-[2rem]">
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-white"
-            >
-              Name
-            </label>
-            <input 
+  return (
+    <section 
+      className="flex items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat p-6"
+      style={{ 
+        backgroundImage: "url('https://preview.redd.it/aluber-the-jester-of-despia-from-yu-gi-oh-v0-l7nxpavi4fac1.png?width=640&crop=smart&auto=webp&s=cbd4dde3a2640afad08419990163c53bf56426c6')", 
+        backgroundSize: "cover", 
+        backgroundPosition: "center", 
+        backgroundRepeat: "no-repeat"
+      }}
+    >
+      <div className="bg-black bg-opacity-70 p-8 rounded-lg w-full max-w-md">
+        <h1 className="text-2xl font-semibold mb-4 text-white text-center">Register</h1>
+        <form onSubmit={submitHandler} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-white">Name</label>
+            <input
               type="text"
-              id="name"
-              className="mt-1 p-2 border rounded w-full"
+              className="mt-1 p-2 border rounded w-full bg-gray-800 text-white"
               placeholder="Enter name"
               value={username}
               onChange={(e) => setUserName(e.target.value)}
             />
           </div>
-          <div className="my-[2rem]">
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-white"
-            >
-              Email Address
-            </label>
-            <input 
+          <div>
+            <label className="block text-sm font-medium text-white">Email Address</label>
+            <input
               type="email"
-              id="email"
-              className="mt-1 p-2 border rounded w-full"
+              className="mt-1 p-2 border rounded w-full bg-gray-800 text-white"
               placeholder="Enter email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          <div className="my-[2rem]">
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-white"
-            >
-              Password
-            </label>
-            <input 
+          <div>
+            <label className="block text-sm font-medium text-white">Password</label>
+            <input
               type="password"
-              id="password"
-              className="mt-1 p-2 border rounded w-full"
+              className="mt-1 p-2 border rounded w-full bg-gray-800 text-white"
               placeholder="Enter password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <div className="my-[2rem]">
-            <label
-              htmlFor="confirmPassword"
-              className="block text-sm font-medium text-white"
-            >
-              Confirm Password
-            </label>
-            <input 
+          <div>
+            <label className="block text-sm font-medium text-white">Confirm Password</label>
+            <input
               type="password"
-              id="confirmPassword"
-              className="mt-1 p-2 border rounded w-full"
-              placeholder="Confirm Password"
+              className="mt-1 p-2 border rounded w-full bg-gray-800 text-white"
+              placeholder="Confirm password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </div>
-
           <button 
-            disabled={isLoading}
-            type="submit"
-            className="bg-pink-500 text-white px-4 py-2 rounded cursor-pointer my-[1rem]"
+            disabled={isLoading} 
+            type="submit" 
+            className="w-full bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded"
           >
             {isLoading ? "Registering..." : "Register"}
           </button>
           {isLoading && <Loader />}
         </form>
-
-
-        <div className="mt-4">
+        <div className="mt-4 text-center">
           <p className="text-white">
             Already have an account? {" "}
-            <Link
-              to={redirect ? `/login?redirect=${redirect}` : "/login"}
-              className="text-pink-500 hover:underline"
-            >
+            <Link to={redirect ? `/login?redirect=${redirect}` : "/login"} className="text-pink-500 hover:underline">
               Login
             </Link>
           </p>
         </div>
       </div>
-
-      <img
-        src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/d65b5b43-ba00-4e33-8490-41ee63b33721/deuf7bc-7207faf9-4ba1-4432-99ee-e727bc65bd4b.png/v1/fill/w_894,h_894,q_70,strp/aluber_of_the_wicked_dogma_by_mrcat95_deuf7bc-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTIwMCIsInBhdGgiOiJcL2ZcL2Q2NWI1YjQzLWJhMDAtNGUzMy04NDkwLTQxZWU2M2IzMzcyMVwvZGV1ZjdiYy03MjA3ZmFmOS00YmExLTQ0MzItOTllZS1lNzI3YmM2NWJkNGIucG5nIiwid2lkdGgiOiI8PTEyMDAifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.Lj7QHT-BD5QT3oEsvuJ2Tl5EETZ2oCALPTKISG6ssFg" 
-        alt=""
-        className="h-[65rem] w-[59%] xl:block md:hidden sm:hidden rounded-lg"
-      />
     </section>
   );
 };
