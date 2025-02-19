@@ -41,7 +41,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
         }),
 
         updateProduct: builder.mutation({
-            query: ({productId, formData}) => ({
+            query: ({ productId, formData }) => ({
                 url: `${PRODUCT_URL}/${productId}`,
                 method: "PUT",
                 body: formData,
@@ -82,6 +82,13 @@ export const productApiSlice = apiSlice.injectEndpoints({
             keepUnusedDataFor: 5,
         }),
 
+        getFilteredProducts: builder.query({
+            query: ({ checked, radio }) => ({
+                url: `${PRODUCT_URL}/filtered-products`,
+                method: "POST",
+                body: { checked, radio },
+            }),
+        }),
     }),
 });
 
@@ -96,5 +103,6 @@ export const {
     useCreateReviewMutation,
     useGetTopProductsQuery,
     useGetNewProductsQuery,
-    useUploadProductImageMutation
+    useUploadProductImageMutation,
+    useGetFilteredProductsQuery,
 } = productApiSlice;
