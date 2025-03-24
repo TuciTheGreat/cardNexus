@@ -1,20 +1,59 @@
-#navigation-container {
-  width: 4%;
-  transition: width 0.3s ease-in-out;
-  overflow: hidden; /* Hide overflowing content during transition */
-}
-
-#navigation-container:hover {
-  width: 15%;
-}
-
-/* Initially hide nav-item-name */
+/* Navigation Labels */
 .nav-item-name {
-  display: none;
-  transition: opacity 0.2s ease-in-out; /* Add opacity transition */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  margin-left: 0.5rem;
+  position: absolute;
+  white-space: nowrap;
 }
 
-#navigation-container:hover .nav-item-name {
-  display: block;
+/* Show labels on hover (desktop) and when open (mobile) */
+#navigation-container:hover .nav-item-name,
+#navigation-container.sidebar-open .nav-item-name {
   opacity: 1;
+  visibility: visible;
+  position: static;
+  margin-left: 0.5rem;
+}
+
+/* Mobile specific styles */
+@media (max-width: 767px) {
+  #navigation-container.sidebar-open {
+    width: 75% !important;
+  }
+  
+  #navigation-container.sidebar-open .nav-item-name {
+    opacity: 1;
+    visibility: visible;
+    position: static;
+  }
+
+  /* User name handling */
+  #navigation-container .max-w-\[80px\] {
+    max-width: 120px;
+  }
+}
+
+/* Desktop hover states */
+@media (min-width: 768px) {
+  #navigation-container:hover .max-w-\[60px\] {
+    max-width: 200px;
+    transition: max-width 0.3s ease-in-out;
+  }
+}
+
+/* Badge positioning */
+.absolute.top-9 {
+  top: 3.5rem;
+  right: -0.5rem;
+}
+
+/* Ensure consistent badge positioning */
+.absolute.-top-1 {
+  top: -1.0rem;
+}
+
+.absolute.-right-2 {
+  right: -0.1rem;
 }
