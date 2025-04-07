@@ -110,155 +110,156 @@ const ProductUpdate = () => {
     };
 
 
-  return (
-    <div className="container mx-auto px-4 sm:px-6 md:px-8">
-      <div className="flex flex-col md:flex-row gap-6 items-center md:items-start">
-        <AdminMenu />
-        <div className="flex-1 p-6 bg-gray-900 rounded-xl shadow-lg max-w-full md:max-w-3xl w-full mx-auto mt-6 md:mt-0">
-          <h1 className="text-3xl font-semibold text-white mb-6 text-center">Update Product</h1>
-
-          {image && (
-            <div className="text-center mb-6">
-              <img
-                src={image}
-                alt="Product"
-                className="block mx-auto max-h-[250px] object-cover rounded-lg border-2 border-gray-700"
-              />
-            </div>
-          )}
-
-          <div className="mb-6">
-            <label className="border text-white px-6 py-3 w-full text-center rounded-lg cursor-pointer font-semibold transition-all duration-200 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
-              {image ? image.name : "Upload Image"}
-              <input
-                type="file"
-                name="image"
-                accept="image/*"
-                onChange={uploadFileHandler}
-                className="hidden"
-              />
-            </label>
-          </div>
-
-          <div className="space-y-6">
-            {/* Form Inputs */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="name" className="text-sm font-medium text-white">Name</label>
-                <input
-                  type="text"
-                  className="w-full p-4 mt-2 border border-gray-700 rounded-lg bg-[#101011] text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+    return (
+      <div className="container mx-auto px-4 py-8 bg-gray-900 text-white min-h-screen flex justify-center items-center">
+        <div className="flex flex-col md:flex-row gap-6 w-full max-w-4xl">
+          <AdminMenu />
+          <div className="md:w-3/4 p-6 bg-gray-800 rounded-lg shadow-lg mx-auto mt-6 md:mt-0">
+            <h1 className="text-3xl font-bold mb-6 text-center">Актуализиране на продукт</h1>
+    
+            {image && (
+              <div className="text-center mb-6">
+                <img
+                  src={image}
+                  alt="Продукт"
+                  className="block mx-auto max-h-[250px] object-cover rounded-lg border-2 border-gray-700"
                 />
               </div>
-              <div>
-                <label htmlFor="price" className="text-sm font-medium text-white">Price</label>
-                <input
-                  type="number"
-                  className="w-full p-4 mt-2 border border-gray-700 rounded-lg bg-[#101011] text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="quantity" className="text-sm font-medium text-white">Quantity</label>
-                <input
-                  type="number"
-                  className="w-full p-4 mt-2 border border-gray-700 rounded-lg bg-[#101011] text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                  value={quantity}
-                  onChange={(e) => setQuantity(e.target.value)}
-                />
-              </div>
-              <div>
-                <label htmlFor="cType" className="text-sm font-medium text-white">Card Type</label>
-                <input
-                  type="text"
-                  className="w-full p-4 mt-2 border border-gray-700 rounded-lg bg-[#101011] text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                  value={cType}
-                  onChange={(e) => setCType(e.target.value)}
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="boosterPack" className="text-sm font-medium text-white">Booster Pack</label>
-                <input
-                  type="text"
-                  className="w-full p-4 mt-2 border border-gray-700 rounded-lg bg-[#101011] text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                  value={boosterPack}
-                  onChange={(e) => setBoosterPack(e.target.value)}
-                />
-              </div>
-              <div>
-                <label htmlFor="year" className="text-sm font-medium text-white">Year</label>
-                <input
-                  type="number"
-                  className="w-full p-4 mt-2 border border-gray-700 rounded-lg bg-[#101011] text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                  value={year}
-                  onChange={(e) => setYear(e.target.value)}
-                />
-              </div>
-            </div>
-
+            )}
+    
             <div className="mb-6">
-              <label htmlFor="description" className="text-sm font-medium text-white">Description</label>
-              <textarea
-                className="w-full p-4 mt-2 border border-gray-700 rounded-lg bg-[#101011] text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              ></textarea>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="stock" className="text-sm font-medium text-white">Count In Stock</label>
+              <label className="border text-white px-6 py-3 w-full text-center rounded-lg cursor-pointer font-semibold transition-all duration-200 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                {image ? image.name : "Качи изображение"}
                 <input
-                  type="number"
-                  className="w-full p-4 mt-2 border border-gray-700 rounded-lg bg-[#101011] text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                  value={stock}
-                  onChange={(e) => setStock(e.target.value)}
+                  type="file"
+                  name="image"
+                  accept="image/*"
+                  onChange={uploadFileHandler}
+                  className="hidden"
                 />
-              </div>
-
-              <div>
-                <label htmlFor="category" className="text-sm font-medium text-white">Category</label>
-                <select
-                  className="w-full p-4 mt-2 border border-gray-700 rounded-lg bg-[#101011] text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                  onChange={(e) => setCategory(e.target.value)}
-                >
-                  {categories?.map((c) => (
-                    <option key={c._id} value={c._id} className="bg-zinc-700">
-                    {c.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              </label>
             </div>
-
-            <div className="flex flex-col sm:flex-row justify-between gap-6 mt-8">
-              <button
-                onClick={handleSubmit}
-                className="w-full sm:w-auto py-3 px-8 rounded-lg text-lg font-bold bg-green-600 hover:bg-green-700 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-500"
-              >
-                Submit
-              </button>
-              <button
-                onClick={handleDelete}
-                className="w-full sm:w-auto py-3 px-8 rounded-lg text-lg font-bold bg-pink-600 hover:bg-pink-700 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-pink-500"
-              >
-                Delete
-              </button>
+    
+            <div className="space-y-6">
+              {/* Формови полета */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label htmlFor="name" className="text-sm font-medium text-white">Име</label>
+                  <input
+                    type="text"
+                    className="w-full p-4 mt-2 border border-gray-700 rounded-lg bg-[#101011] text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="price" className="text-sm font-medium text-white">Цена</label>
+                  <input
+                    type="number"
+                    className="w-full p-4 mt-2 border border-gray-700 rounded-lg bg-[#101011] text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
+                  />
+                </div>
+              </div>
+    
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label htmlFor="quantity" className="text-sm font-medium text-white">Количество</label>
+                  <input
+                    type="number"
+                    className="w-full p-4 mt-2 border border-gray-700 rounded-lg bg-[#101011] text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    value={quantity}
+                    onChange={(e) => setQuantity(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="cType" className="text-sm font-medium text-white">Тип карта</label>
+                  <input
+                    type="text"
+                    className="w-full p-4 mt-2 border border-gray-700 rounded-lg bg-[#101011] text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    value={cType}
+                    onChange={(e) => setCType(e.target.value)}
+                  />
+                </div>
+              </div>
+    
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label htmlFor="boosterPack" className="text-sm font-medium text-white">Бустър пакет</label>
+                  <input
+                    type="text"
+                    className="w-full p-4 mt-2 border border-gray-700 rounded-lg bg-[#101011] text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    value={boosterPack}
+                    onChange={(e) => setBoosterPack(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="year" className="text-sm font-medium text-white">Година</label>
+                  <input
+                    type="number"
+                    className="w-full p-4 mt-2 border border-gray-700 rounded-lg bg-[#101011] text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    value={year}
+                    onChange={(e) => setYear(e.target.value)}
+                  />
+                </div>
+              </div>
+    
+              <div className="mb-6">
+                <label htmlFor="description" className="text-sm font-medium text-white">Описание</label>
+                <textarea
+                  className="w-full p-4 mt-2 border border-gray-700 rounded-lg bg-[#101011] text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                ></textarea>
+              </div>
+    
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label htmlFor="stock" className="text-sm font-medium text-white">Наличност</label>
+                  <input
+                    type="number"
+                    className="w-full p-4 mt-2 border border-gray-700 rounded-lg bg-[#101011] text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    value={stock}
+                    onChange={(e) => setStock(e.target.value)}
+                  />
+                </div>
+    
+                <div>
+                  <label htmlFor="category" className="text-sm font-medium text-white">Категория</label>
+                  <select
+                    className="w-full p-4 mt-2 border border-gray-700 rounded-lg bg-[#101011] text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    onChange={(e) => setCategory(e.target.value)}
+                  >
+                    {categories?.map((c) => (
+                      <option key={c._id} value={c._id} className="bg-zinc-700">
+                        {c.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+    
+              <div className="flex flex-col sm:flex-row justify-between gap-6 mt-8">
+                <button
+                  onClick={handleSubmit}
+                  className="w-full sm:w-auto py-3 px-8 rounded-lg text-lg font-bold bg-green-600 hover:bg-green-700 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+                >
+                  Изпрати
+                </button>
+                <button
+                  onClick={handleDelete}
+                  className="w-full sm:w-auto py-3 px-8 rounded-lg text-lg font-bold bg-pink-600 hover:bg-pink-700 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-pink-500"
+                >
+                  Изтрий
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+    
 };
 
 export default ProductUpdate;
