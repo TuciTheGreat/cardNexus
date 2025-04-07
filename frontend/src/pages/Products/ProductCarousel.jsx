@@ -68,49 +68,53 @@ const ProductCarousel = () => {
   return (
     <div className="mb-4 w-full max-w-[1000px] mx-auto relative sm:w-[90%] md:w-[80%] lg:w-[100%] sm:ml-2 md:ml-4 lg:ml-6">
       {isLoading ? null : error ? (
-        <Message variant="danger">{error?.data?.message || error.message}</Message>
+        <Message variant="danger">
+          {error?.data?.message || error.message}
+        </Message>
       ) : (
         <Slider {...settings} className="w-full relative">
           {products.map((product) => (
             <div key={product._id} className="bg-gray-900 text-white p-6 rounded-lg shadow-lg">
-              {/* Product Image */}
+              {/* Изображение на продукта */}
               <img
                 src={product.image}
                 alt={product.name}
                 className="rounded-lg w-full h-[400px] object-contain sm:h-[250px] md:h-[300px] lg:h-[400px]"
               />
-
-              {/* Product Info */}
+  
+              {/* Информация за продукта */}
               <div className="mt-4 text-left">
                 <h2 className="text-lg sm:text-xl font-bold">{product.name}</h2>
-                <p className="text-pink-400 text-sm sm:text-base font-semibold">${product.price}</p>
+                <p className="text-pink-400 text-sm sm:text-base font-semibold">
+                  ${product.price}
+                </p>
                 <p className="text-gray-300 text-xs sm:text-sm mt-2">
                   {product.description.substring(0, 170)}...
                 </p>
               </div>
-
-              {/* Product Details */}
+  
+              {/* Детайли за продукта */}
               <div className="mt-4 flex flex-wrap justify-between text-xs sm:text-sm text-gray-400">
                 <div className="flex items-center">
-                  <FaStore className="mr-2 text-pink-400" /> Type: {product.cType}
+                  <FaStore className="mr-2 text-pink-400" /> Тип: {product.cType}
                 </div>
                 <div className="flex items-center">
-                  <FaClock className="mr-2 text-blue-400" /> Added: {moment(product.createdAt).fromNow()}
+                  <FaClock className="mr-2 text-blue-400" /> Добавена: {moment(product.createdAt).fromNow()}
                 </div>
               </div>
-
+  
               <div className="mt-4 flex flex-wrap justify-between text-xs sm:text-sm text-gray-400">
                 <div className="flex items-center">
-                  <FaStar className="mr-2 text-yellow-400" /> Reviews: {product.numReviews}
+                  <FaStar className="mr-2 text-yellow-400" /> Ревюта: {product.numReviews}
                 </div>
                 <div className="flex items-center">
-                  <FaStar className="mr-2 text-yellow-400" /> Rating: {Math.round(product.rating)}
+                  <FaStar className="mr-2 text-yellow-400" /> Оценка: {Math.round(product.rating)}
                 </div>
                 <div className="flex items-center">
-                  <FaShoppingCart className="mr-2 text-green-400" /> Quantity: {product.quantity}
+                  <FaShoppingCart className="mr-2 text-green-400" /> Количество: {product.quantity}
                 </div>
                 <div className="flex items-center">
-                  <FaBox className="mr-2 text-red-400" /> In Stock: {product.countInStock}
+                  <FaBox className="mr-2 text-red-400" /> Наличност: {product.countInStock}
                 </div>
               </div>
             </div>
@@ -119,6 +123,7 @@ const ProductCarousel = () => {
       )}
     </div>
   );
+  
 };
 
 export default ProductCarousel;

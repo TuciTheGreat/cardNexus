@@ -18,28 +18,26 @@ const ProductCard = ({ p }) => {
   };
 
   return (
-    <div className="max-w-sm relative bg-[#1A1A1A] rounded-lg shadow dark:bg-gray-800">
-      <section className="relative">
+    <div className="max-w-sm relative bg-gradient-to-b from-[#1f1f1f] to-[#141414] rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 group">
+      <section className="relative overflow-hidden rounded-t-xl">
         <Link to={`/product/${p._id}`}>
-          <span className="absolute bottom-3 right-3 bg-pink-100 text-pink-800 text-sm font-medium
-          mr-2 px-2.5 py-0.5 rounded-full dark:bg-pink-900 dark:text-pink-300">
+          <span className="absolute bottom-3 right-3 bg-pink-500/90 text-white text-sm font-semibold px-3 py-1 rounded-full backdrop-blur-sm z-10">
             {p?.cType}
           </span>
           <img 
-            className="cursor-pointer mx-auto"
+            className="cursor-pointer mx-auto transform transition-transform duration-300 group-hover:scale-105"
             src={p.image} 
             alt={p.name}
-            style={{ height: "170px", objectFit: "cover" }} 
+            style={{ height: "180px", objectFit: "cover" }} 
           />
         </Link>
         <HeartIcon product={p} />
       </section>
 
       <div className="p-5">
-        <div className="flex justify-between">
-          <h5 className="mb-2 text-xl text-white dark:text-white">{p?.name}</h5>
-
-          <p className="text-black font-semibold text-pink-500">
+        <div className="flex justify-between items-start mb-3">
+          <h5 className="text-xl font-bold text-white truncate">{p?.name}</h5>
+          <p className="text-pink-500 font-bold text-lg ml-2">
             {p?.price?.toLocaleString("en-US", {
               style: "currency",
               currency: "USD",
@@ -47,45 +45,44 @@ const ProductCard = ({ p }) => {
           </p>
         </div>
 
-        <p className="mb-3 font-normal text-[#CFCFCF]">
-          {p?.description?.substring(0, 60)} ...
+        <p className="mb-4 text-gray-400 leading-relaxed">
+          {p?.description?.substring(0, 60)}...
         </p>
 
         <section className="flex justify-between items-center">
-            <Link
-              to={`/product/${p._id}`}
-              className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white
-               bg-pink-700 rounded-lg hover:bg-pink-800 focus:ring-4 focus:outline-none
-                focus:ring-pink-300 dark:bg-pink-600 dark:hover:bg-pink-700 dark:focus:ring-pink-800"
-              >
-                Read More
-                <svg
-                  className="w-3.5 h-3.5 ml-2"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 14 10"
-                >
-                  <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M1 5h12m0 0L9 1m4 4L9 9"
-                />
-                </svg>
-              </Link>
+          <Link
+            to={`/product/${p._id}`}
+            className="inline-flex items-center px-4 py-2.5 text-sm font-medium bg-gradient-to-r from-pink-600 to-purple-600 rounded-lg text-white hover:from-pink-700 hover:to-purple-700 transition-all transform hover:scale-[1.02] shadow-md"
+          >
+            Прочети още
+            <svg
+              className="w-3.5 h-3.5 ml-2"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 10"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M1 5h12m0 0L9 1m4 4L9 9"
+              />
+            </svg>
+          </Link>
 
-              <button
-                className="p-2 rounded-full"
-                onClick={() => addToCartHandler(p, 1)}
-              >
-                <AiOutlineShoppingCart size={25} />
-              </button>
+          <button
+            className="p-2.5 rounded-full bg-gray-800 hover:bg-pink-600 transition-colors duration-200 text-white hover:text-white shadow-sm hover:shadow-pink-500/30"
+            onClick={() => addToCartHandler(p, 1)}
+          >
+            <AiOutlineShoppingCart size={22} />
+          </button>
         </section>
       </div>
     </div>
-  );
+);
+  
 };
 
 export default ProductCard;
