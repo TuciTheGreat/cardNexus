@@ -2,7 +2,7 @@ const CategoryForm = ({
     value,
     setValue,
     handleSubmit,
-    buttonText = "Submit",
+    buttonText = "Изпрати",
     handleDelete,
 }) => {
     return (
@@ -11,7 +11,7 @@ const CategoryForm = ({
                 <input
                     type="text"
                     className="py-3 px-4 border rounded-lg w-full bg-zinc-900 text-white"
-                    placeholder="Write category name"
+                    placeholder="Въведете име на категория"
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
                 />
@@ -30,7 +30,7 @@ const CategoryForm = ({
                             hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500
                             focus:ring-opacity-50"
                         >
-                            Delete
+                            Изтрий
                         </button>
                     )}
                 </div>
@@ -38,5 +38,6 @@ const CategoryForm = ({
         </div>
     );
 };
+
 
 export default CategoryForm;

@@ -90,51 +90,58 @@ const CategoryList = () => {
 
     return (
         <div className="flex flex-col md:flex-row w-full">
-            {/* Admin Menu */}
-            <div className="ml-[10rem] flex flex-col md:flex-row z-10">
-                <AdminMenu />
+          {/* Администраторско меню */}
+          <div className="ml-[10rem] flex flex-col md:flex-row z-10">
+            <AdminMenu />
+          </div>
+      
+          {/* Основно съдържание */}
+          <div className="w-full p-4 mx-auto max-w-screen-xl">
+            <div className="text-2xl font-semibold mb-6 text-center">
+              Управление на категории
             </div>
-
-            {/* Main Content */}
-            <div className="w-full p-4 mx-auto max-w-screen-xl">
-                <div className="text-2xl font-semibold mb-6 text-center">Manage Categories</div>
-
-                {/* Category Form */}
-                <CategoryForm value={name} setValue={setName} handleSubmit={handleCreateCategory} />
-                <br />
-                <hr className="my-6" />
-
-                {/* Category List */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mt-6">
-                    {categories?.map((category) => (
-                        <div key={category._id} className="w-full">
-                            <button
-                                className="bg-zinc-900 border border-pink-500 text-pink-500 py-3 px-5 rounded-lg w-full transition transform duration-200 hover:scale-105 hover:bg-pink-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50"
-                                onClick={() => {
-                                    setModalVisible(true);
-                                    setSelectedCategory(category);
-                                    setUpdatingName(category.name);
-                                }}
-                            >
-                                <span className="text-lg font-medium">{category.name}</span>
-                            </button>
-                        </div>
-                    ))}
+      
+            {/* Форма за категория */}
+            <CategoryForm
+              value={name}
+              setValue={setName}
+              handleSubmit={handleCreateCategory}
+            />
+            <br />
+            <hr className="my-6" />
+      
+            {/* Списък с категории */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mt-6">
+              {categories?.map((category) => (
+                <div key={category._id} className="w-full">
+                  <button
+                    className="bg-zinc-900 border border-pink-500 text-pink-500 py-3 px-5 rounded-lg w-full transition transform duration-200 hover:scale-105 hover:bg-pink-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50"
+                    onClick={() => {
+                      setModalVisible(true);
+                      setSelectedCategory(category);
+                      setUpdatingName(category.name);
+                    }}
+                  >
+                    <span className="text-lg font-medium">{category.name}</span>
+                  </button>
                 </div>
-
-                {/* Modal */}
-                <Modal isOpen={modalVisible} onClose={() => setModalVisible(false)}>
-                    <CategoryForm
-                        value={updatingName}
-                        setValue={(value) => setUpdatingName(value)}
-                        handleSubmit={handleUpdateCategory}
-                        buttonText="Update"
-                        handleDelete={handleDeleteCategory}
-                    />
-                </Modal>
+              ))}
             </div>
+      
+            {/* Модал */}
+            <Modal isOpen={modalVisible} onClose={() => setModalVisible(false)}>
+              <CategoryForm
+                value={updatingName}
+                setValue={(value) => setUpdatingName(value)}
+                handleSubmit={handleUpdateCategory}
+                buttonText="Актуализирай"
+                handleDelete={handleDeleteCategory}
+              />
+            </Modal>
+          </div>
         </div>
-    );
+      );
+      
 };
 
 export default CategoryList;
