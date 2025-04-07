@@ -32,7 +32,7 @@ const AdminDashboard = () => {
                 curve: "smooth",
             },
             title: {
-                text: "Sales Trend",
+                text: "Тенденция на продажбите",
                 align: "left",
             },
             grid: {
@@ -44,12 +44,12 @@ const AdminDashboard = () => {
             xaxis: {
                 categories: [],
                 title: {
-                    text: "Date",
+                    text: "Дата",
                 },
             },
             yaxis: {
                 title: {
-                    text: "Sales",
+                    text: "Продажби",
                 },
                 min: 0,
             },
@@ -96,33 +96,33 @@ const AdminDashboard = () => {
                         <div className="w-12 h-12 rounded-full bg-pink-500/10 flex items-center justify-center">
                             <span className="text-pink-400 font-bold text-xl">$</span>
                         </div>
-                        <p className="mt-4 text-gray-400 text-sm font-medium">Total Sales</p>
+                        <p className="mt-4 text-gray-400 text-sm font-medium">Общо продажби</p>
                         <h1 className="text-2xl font-bold text-gray-100 mt-1">
                             {isLoading ? <Loader /> : `$${Math.round(sales.totalSales * 100) / 100}`}
                         </h1>
                     </div>
-
+    
                     <div className="bg-gray-900 rounded-xl p-4 md:p-6 border border-gray-800 hover:border-blue-500/30 transition-all min-w-0">
                         <div className="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center">
                             <span className="text-blue-400 text-xl">👥</span>
                         </div>
-                        <p className="mt-4 text-gray-400 text-sm font-medium">Customers</p>
+                        <p className="mt-4 text-gray-400 text-sm font-medium">Клиенти</p>
                         <h1 className="text-2xl font-bold text-gray-100 mt-1">
                             {isLoading ? <Loader /> : customers?.length}
                         </h1>
                     </div>
-
+    
                     <div className="bg-gray-900 rounded-xl p-4 md:p-6 border border-gray-800 hover:border-green-500/30 transition-all min-w-0">
                         <div className="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center">
                             <span className="text-green-400 text-xl">📦</span>
                         </div>
-                        <p className="mt-4 text-gray-400 text-sm font-medium">Total Orders</p>
+                        <p className="mt-4 text-gray-400 text-sm font-medium">Общо поръчки</p>
                         <h1 className="text-2xl font-bold text-gray-100 mt-1">
                             {isLoading ? <Loader /> : orders?.totalOrders}
                         </h1>
                     </div>
                 </div>
-
+    
                 <div className="mt-6 md:mt-8">
                     <div className="bg-gray-900 rounded-xl p-4 md:p-6 border border-gray-800">
                         <Chart
@@ -140,7 +140,7 @@ const AdminDashboard = () => {
                         />
                     </div>
                 </div>
-
+    
                 <div className="mt-6 md:mt-8">
                     <div className="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">
                         <OrderList />
