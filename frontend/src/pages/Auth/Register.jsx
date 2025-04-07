@@ -55,44 +55,44 @@ const Register = () => {
       }}
     >
       <div className="bg-black bg-opacity-70 p-8 rounded-lg w-full max-w-md">
-        <h1 className="text-2xl font-semibold mb-4 text-white text-center">Register</h1>
+        <h1 className="text-2xl font-semibold mb-4 text-white text-center">Регистрация</h1>
         <form onSubmit={submitHandler} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-white">Name</label>
+            <label className="block text-sm font-medium text-white">Име</label>
             <input
               type="text"
               className="mt-1 p-2 border rounded w-full bg-gray-800 text-white"
-              placeholder="Enter name"
+              placeholder="Въведете име"
               value={username}
               onChange={(e) => setUserName(e.target.value)}
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-white">Email Address</label>
+            <label className="block text-sm font-medium text-white">Имейл адрес</label>
             <input
               type="email"
               className="mt-1 p-2 border rounded w-full bg-gray-800 text-white"
-              placeholder="Enter email"
+              placeholder="Въведете имейл"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-white">Password</label>
+            <label className="block text-sm font-medium text-white">Парола</label>
             <input
               type="password"
               className="mt-1 p-2 border rounded w-full bg-gray-800 text-white"
-              placeholder="Enter password"
+              placeholder="Въведете парола"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-white">Confirm Password</label>
+            <label className="block text-sm font-medium text-white">Потвърдете парола</label>
             <input
               type="password"
               className="mt-1 p-2 border rounded w-full bg-gray-800 text-white"
-              placeholder="Confirm password"
+              placeholder="Потвърдете парола"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
@@ -102,21 +102,22 @@ const Register = () => {
             type="submit" 
             className="w-full bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded"
           >
-            {isLoading ? "Registering..." : "Register"}
+            {isLoading ? "Регистрация..." : "Регистрация"}
           </button>
           {isLoading && <Loader />}
         </form>
         <div className="mt-4 text-center">
           <p className="text-white">
-            Already have an account? {" "}
+            Вече имате акаунт?{" "}
             <Link to={redirect ? `/login?redirect=${redirect}` : "/login"} className="text-pink-500 hover:underline">
-              Login
+              Вход
             </Link>
           </p>
         </div>
       </div>
     </section>
   );
+  
 };
 
 export default Register;

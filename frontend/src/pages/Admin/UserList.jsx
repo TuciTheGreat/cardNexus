@@ -60,37 +60,37 @@ const UserList = () => {
         <Loader />
       ) : error ? (
         <Message variant="danger">
-          {error?.data.message || error.message}
+          {error?.data.message || error.error}
         </Message>
       ) : (
         <div className="flex flex-col md:flex-row">
           <AdminMenu />
-
+  
           {/* Desktop View - Table */}
           <div className="hidden md:block w-full md:w-4/5 mx-auto overflow-x-auto mt-8">
             <table className="w-full border border-gray-300 rounded-lg">
               <thead className="bg-gray-200 text-gray-700">
                 <tr>
                   <th className="px-4 py-2 text-left">ID</th>
-                  <th className="px-4 py-2 text-left">NAME</th>
-                  <th className="px-4 py-2 text-left">EMAIL</th>
-                  <th className="px-4 py-2 text-left">ADMIN</th>
-                  <th className="px-4 py-2 text-left">ACTIONS</th>
+                  <th className="px-4 py-2 text-left">ИМЕ</th>
+                  <th className="px-4 py-2 text-left">ИМЕЙЛ</th>
+                  <th className="px-4 py-2 text-left">АДМИН</th>
+                  <th className="px-4 py-2 text-left">ДЕЙСТВИЯ</th>
                 </tr>
               </thead>
               <tbody>
                 {users.map((user) => (
-                  <tr 
-                    key={user._id} 
+                  <tr
+                    key={user._id}
                     className="border-b hover:bg-gray-100 hover:text-black transition-all"
                   >
                     <td className="px-4 py-2">{user._id}</td>
-
+  
                     <td className="px-4 py-2">
                       {editableUserId === user._id ? (
                         <div className="flex items-center">
-                          <input 
-                            type="text" 
+                          <input
+                            type="text"
                             value={editableUserName}
                             onChange={(e) => setEditableUserName(e.target.value)}
                             className="w-full p-2 border rounded-lg"
@@ -114,12 +114,12 @@ const UserList = () => {
                         </div>
                       )}
                     </td>
-
+  
                     <td className="px-4 py-2">
                       {editableUserId === user._id ? (
                         <div className="flex items-center">
-                          <input 
-                            type="text" 
+                          <input
+                            type="text"
                             value={editableUserEmail}
                             onChange={(e) => setEditableUserEmail(e.target.value)}
                             className="w-full p-2 border rounded-lg"
@@ -143,7 +143,7 @@ const UserList = () => {
                         </div>
                       )}
                     </td>
-
+  
                     <td className="px-4 py-2">
                       {user.isAdmin ? (
                         <FaCheck className="text-green-500" />
@@ -151,7 +151,7 @@ const UserList = () => {
                         <FaTimes className="text-red-500" />
                       )}
                     </td>
-
+  
                     <td className="px-4 py-2">
                       {!user.isAdmin && (
                         <button
@@ -167,53 +167,53 @@ const UserList = () => {
               </tbody>
             </table>
           </div>
-
+  
           {/* Mobile View - Cards */}
           <div className="md:hidden w-full mx-auto overflow-x-auto mt-14">
             {users.map((user) => (
-              <div 
-                key={user._id} 
+              <div
+                key={user._id}
                 className="border p-4 rounded-lg shadow hover:text-black transition-all mb-4"
               >
                 <div className="text-sm text-gray-500">ID: {user._id}</div>
                 <div className="font-bold text-lg">{user.username}</div>
                 <div className="text-gray-600">{user.email}</div>
                 <div className="text-sm">
-                  Admin: {user.isAdmin ? (
+                  Админ: {user.isAdmin ? (
                     <FaCheck className="text-green-500 inline" />
                   ) : (
                     <FaTimes className="text-red-500 inline" />
                   )}
                 </div>
-
+  
                 <div className="mt-2 flex space-x-2">
                   <button
                     onClick={() => toggleEdit(user._id, user.username, user.email)}
                     className="bg-blue-500 text-white px-3 py-1 rounded flex items-center"
                   >
-                    <FaEdit className="mr-1" /> Edit
+                    <FaEdit className="mr-1" /> Редактирай
                   </button>
                   {!user.isAdmin && (
                     <button
                       onClick={() => deleteHandler(user._id)}
                       className="bg-red-600 text-white px-3 py-1 rounded flex items-center"
                     >
-                      <FaTrash className="mr-1" /> Delete
+                      <FaTrash className="mr-1" /> Изтрий
                     </button>
                   )}
                 </div>
-
+  
                 {editableUserId === user._id && (
                   <div className="mt-4">
                     <div className="flex space-x-2">
-                      <input 
-                        type="text" 
+                      <input
+                        type="text"
                         value={editableUserName}
                         onChange={(e) => setEditableUserName(e.target.value)}
                         className="w-full p-2 border rounded-lg"
                       />
-                      <input 
-                        type="text" 
+                      <input
+                        type="text"
                         value={editableUserEmail}
                         onChange={(e) => setEditableUserEmail(e.target.value)}
                         className="w-full p-2 border rounded-lg"
@@ -233,7 +233,7 @@ const UserList = () => {
         </div>
       )}
     </div>
-  );
+  );  
 };
 
 export default UserList;

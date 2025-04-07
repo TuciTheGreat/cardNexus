@@ -64,16 +64,17 @@ const Navigation = () => {
 
     return (
       <>
-        {/* Hamburger Button */}
+        {/* Бутона за хамбургер */}
         <button 
           id="hamburger-menu"
           onClick={toggleSidebar} 
           className="fixed top-4 left-4 z-50 block md:hidden bg-black text-white px-5 py-3 text-2xl rounded-md"
+          aria-label="Администраторско меню"
         >
           ☰
         </button>
     
-        {/* Sidebar */}
+        {/* Странично меню */}
         <div 
           style={{ zIndex: 999 }}
           className={`fixed top-0 left-0 h-full bg-black text-white transition-all duration-300 ease-in-out
@@ -88,7 +89,7 @@ const Navigation = () => {
               className="flex items-center transition-transform transform hover:translate-x-2 group"
             >
               <AiOutlineHome className="mr-2 mt-[3rem]" size={26} />
-              <span className="nav-item-name mt-[3rem] ml-2">HOME</span>
+              <span className="nav-item-name mt-[3rem] ml-2">НАЧАЛО</span>
             </Link>
     
             <Link 
@@ -96,12 +97,12 @@ const Navigation = () => {
               className="flex items-center transition-transform transform hover:translate-x-2 group"
             >
               <AiOutlineShopping className="mr-2 mt-[3rem]" size={26} />
-              <span className="nav-item-name mt-[3rem] ml-2">SHOP</span>
+              <span className="nav-item-name mt-[3rem] ml-2">МАГАЗИН</span>
             </Link>
     
             <Link to="/cart" className="flex relative">
               <div className="flex items-center transition-transform transform hover:translate-x-2">
-                <div className="relative mr-2 mt-[3rem]"> {/* Added wrapper div */}
+                <div className="relative mr-2 mt-[3rem]">
                   <AiOutlineShoppingCart size={26} />
                   {cartItems.length > 0 && (
                     <div className="absolute -top-1 -right-2">
@@ -111,14 +112,14 @@ const Navigation = () => {
                     </div>
                   )}
                 </div>
-                <span className="nav-item-name mt-[3rem] ml-2">CART</span>
+                <span className="nav-item-name mt-[3rem] ml-2">КОЛИЧКА</span>
               </div>
             </Link>
     
             <Link to="/favorite" className="flex relative group">
               <div className="flex items-center transition-transform transform hover:translate-x-2">
                 <FaHeart className="mr-2 mt-[3rem]" size={20} />
-                <span className="nav-item-name mt-[3rem] ml-2">FAVORITE</span>
+                <span className="nav-item-name mt-[3rem] ml-2">ЛЮБИМИ</span>
               </div>
               <FavoritesCount />
             </Link>
@@ -136,9 +137,7 @@ const Navigation = () => {
                   </span> 
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className={`h-4 w-4 ml-1 ${
-                      dropdownOpen ? "transform rotate-180" : ""
-                    }`}
+                    className={`h-4 w-4 ml-1 ${dropdownOpen ? "transform rotate-180" : ""}`}
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="white"
@@ -157,70 +156,70 @@ const Navigation = () => {
             </button>
     
             {dropdownOpen && userInfo && (
-                <ul
-                  className={`absolute right-0 mt-2 mr-14 space-y-2 bg-gray-950 text-white ${
-                    !userInfo.isAdmin ? "-top-20" : "-top-80"
-                  }`}
-                >
-                  {userInfo.isAdmin && (
-                    <>
-                      <li>
-                        <Link 
-                          to="/admin/dashboard" 
-                          className="block px-4 py-2 hover:bg-gray-900"
-                        >
-                          Dashboard
-                        </Link>
-                      </li>
-                      <li>
-                        <Link 
-                          to="/admin/productlist" 
-                          className="block px-4 py-2 hover:bg-gray-900"
-                        >
-                          Products
-                        </Link>
-                      </li>
-                      <li>
-                        <Link 
-                          to="/admin/categorylist" 
-                          className="block px-4 py-2 hover:bg-gray-900"
-                        >
-                          Category
-                        </Link>
-                      </li>
-                      <li>
-                        <Link 
-                          to="/admin/orderlist" 
-                          className="block px-4 py-2 hover:bg-gray-900"
-                        >
-                          Orders
-                        </Link>
-                      </li>
-                      <li>
-                        <Link 
-                          to="/admin/userlist" 
-                          className="block px-4 py-2 hover:bg-gray-900"
-                        >
-                          Users
-                        </Link>
-                      </li>                        
-                    </>
-                  )}
-                  <li>
-                    <Link to="/profile" className="block px-4 py-2 hover:bg-gray-900">
-                      Profile
-                    </Link>
-                  </li>
-                  <li>
-                    <button
-                      onClick={logoutHandler}
-                      className="block w-full px-4 py-2 text-left hover:bg-gray-900"
-                    >
-                      Logout
-                    </button>
-                  </li>
-                </ul>
-              )}
+              <ul
+                className={`absolute right-0 mt-2 mr-14 space-y-2 bg-gray-950 text-white ${
+                  !userInfo.isAdmin ? "-top-20" : "-top-80"
+                }`}
+              >
+                {userInfo.isAdmin && (
+                  <>
+                    <li>
+                      <Link 
+                        to="/admin/dashboard" 
+                        className="block px-4 py-2 hover:bg-gray-900"
+                      >
+                        Табло
+                      </Link>
+                    </li>
+                    <li>
+                      <Link 
+                        to="/admin/productlist" 
+                        className="block px-4 py-2 hover:bg-gray-900"
+                      >
+                        Продукти
+                      </Link>
+                    </li>
+                    <li>
+                      <Link 
+                        to="/admin/categorylist" 
+                        className="block px-4 py-2 hover:bg-gray-900"
+                      >
+                        Категории
+                      </Link>
+                    </li>
+                    <li>
+                      <Link 
+                        to="/admin/orderlist" 
+                        className="block px-4 py-2 hover:bg-gray-900"
+                      >
+                        Поръчки
+                      </Link>
+                    </li>
+                    <li>
+                      <Link 
+                        to="/admin/userlist" 
+                        className="block px-4 py-2 hover:bg-gray-900"
+                      >
+                        Потребители
+                      </Link>
+                    </li>                        
+                  </>
+                )}
+                <li>
+                  <Link to="/profile" className="block px-4 py-2 hover:bg-gray-900">
+                    Профил
+                  </Link>
+                </li>
+                <li>
+                  <button
+                    onClick={logoutHandler}
+                    className="block w-full px-4 py-2 text-left hover:bg-gray-900"
+                  >
+                    Изход
+                  </button>
+                </li>
+              </ul>
+            )}
     
             {!userInfo && (
               <ul>
@@ -230,7 +229,7 @@ const Navigation = () => {
                     className="flex items-center mt-5 transition-transform transform hover:translate-x-2"
                   >
                     <AiOutlineLogin className="mr-2 mt-[4px]" size={26} />
-                    <span className="nav-item-name">LOGIN</span>
+                    <span className="nav-item-name">ВХОД</span>
                   </Link>
                 </li>
                 <li>
@@ -239,7 +238,7 @@ const Navigation = () => {
                     className="flex items-center mt-5 transition-transform transform hover:translate-x-2"
                   >
                     <AiOutlineUserAdd size={26} />
-                    <span className="nav-item-name">REGISTER</span>
+                    <span className="nav-item-name">РЕГИСТРАЦИЯ</span>
                   </Link>
                 </li>
               </ul>
@@ -247,7 +246,7 @@ const Navigation = () => {
           </div>
         </div>
       </>
-    );
+    );    
 };
 
 export default Navigation;
