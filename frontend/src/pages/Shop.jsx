@@ -57,63 +57,81 @@ const Shop = () => {
   return (
     <>
       <div className="max-w-[90%] mx-auto p-4">
-        <div className="flex flex-col md:flex-row gap-4">
-          {/* Sidebar */}
-          <div className="bg-[#151515] p-3 rounded-lg w-full md:w-[13rem] min-h-screen overflow-y-auto relative">
-            <h2 className="h4 text-center py-2 bg-black rounded-full mb-2">Filter by Categories</h2>
-            <div className="p-5">
+        <div className="flex flex-col md:flex-row gap-6">
+          {/* Filters Sidebar */}
+          <div className="bg-gradient-to-b from-[#1a1a1a] to-[#0d0d0d] p-4 rounded-xl w-full md:w-[15rem] min-h-screen overflow-y-auto relative shadow-2xl">
+            <h2 className="text-lg font-bold text-center py-3 bg-gradient-to-r from-pink-600 to-purple-600 rounded-full mb-4 text-white">
+              Филтър по категории
+            </h2>
+            <div className="space-y-3">
               {categories?.map((c) => (
-                <div key={c._id} className="mb-2">
-                  <label className="flex items-center space-x-2 text-white">
-                    <input type="checkbox" onChange={(e) => handleCheck(e.target.checked, c._id)} className="w-4 h-4" />
-                    <span>{c.name}</span>
+                <div key={c._id} className="group">
+                  <label className="flex items-center space-x-3 p-2 rounded-lg transition-all duration-200 group-hover:bg-white/10 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      onChange={(e) => handleCheck(e.target.checked, c._id)}
+                      className="w-5 h-5 accent-pink-500 bg-gray-700 border-gray-600 rounded focus:ring-pink-500"
+                    />
+                    <span className="text-gray-300 group-hover:text-white">{c.name}</span>
                   </label>
                 </div>
               ))}
             </div>
 
-            <h2 className="h4 text-center py-2 bg-black rounded-full mb-2">Filter by Card Type</h2>
-            <div className="p-5">
+            <h2 className="text-lg font-bold text-center py-3 bg-gradient-to-r from-pink-600 to-purple-600 rounded-full mb-4 mt-6 text-white">
+              Филтър по тип карта
+            </h2>
+            <div className="space-y-3">
               {uniqueCardtypes?.map((cType) => (
-                <label key={cType} className="flex items-center space-x-2 mb-2 text-white">
-                  <input type="radio" name="cType" onChange={() => handleCardtypeClick(cType)} className="w-4 h-4" />
-                  <span>{cType}</span>
+                <label key={cType} className="flex items-center space-x-3 p-2 rounded-lg transition-all duration-200 hover:bg-white/10 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="cType"
+                    onChange={() => handleCardtypeClick(cType)}
+                    className="w-5 h-5 accent-pink-500 bg-gray-700 border-gray-600 rounded-full focus:ring-pink-500"
+                  />
+                  <span className="text-gray-300 hover:text-white">{cType}</span>
                 </label>
               ))}
             </div>
 
-            <h2 className="h4 text-center py-2 bg-black rounded-full mb-2">Filter by Price</h2>
-            <div className="p-5">
+            <h2 className="text-lg font-bold text-center py-3 bg-gradient-to-r from-pink-600 to-purple-600 rounded-full mb-4 mt-6 text-white">
+              Филтър по цена
+            </h2>
+            <div className="p-2">
               <input
                 type="text"
-                placeholder="Enter Price"
+                placeholder="Въведете цена"
                 value={priceFilter}
                 onChange={handlePriceChange}
-                className="w-full px-3 py-2 bg-[#151515] border-gray-500 text-white placeholder-gray-400 border rounded-lg focus:outline-none focus:ring"
+                className="w-full px-4 py-2.5 bg-gray-800 border border-gray-700 text-white placeholder-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all"
               />
             </div>
 
-            <div className="p-5 pt-0">
+            <div className="p-2 mt-4">
               <button
-                className="w-full border border-gray-500 bg-[#151515] py-2 rounded-lg text-white"
+                className="w-full py-2.5 bg-gradient-to-r from-pink-600 to-purple-600 rounded-lg text-white font-semibold hover:from-pink-700 hover:to-purple-700 transition-all transform hover:scale-[1.02] shadow-lg hover:shadow-pink-500/20"
                 onClick={() => window.location.reload()}
               >
-                Reset
+                Нулирай
               </button>
             </div>
           </div>
 
-          {/* Product Grid */}
-          <div className="w-full">
-            <h2 className="text-center mb-2 text-white">{products?.length} Products</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {/* Products Grid */}
+          <div className="flex-1">
+            <h2 className="text-center mb-4 text-2xl font-bold bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
+              {products?.length} Продукти
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
               {products.length === 0 ? <Loader /> : products?.map((p) => <ProductCard key={p._id} p={p} />)}
             </div>
           </div>
         </div>
       </div>
     </>
-  );
+);
+  
 };
 
 export default Shop;
