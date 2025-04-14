@@ -1,11 +1,11 @@
-// packages
+//packages
 import path from "path";
 import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
-import serverless from "serverless-http";
+import cors from "cors";
 
-// Utils
+//Utiles
 import connectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
@@ -16,12 +16,22 @@ import orderRoutes from "./routes/orderRoutes.js";
 dotenv.config();
 const port = process.env.PORT || 5000;
 
+const corsConfig = {
+    origin: "*",
+    credential: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+};
+
+
 connectDB();
 
 const app = express();
 
+app.use(cors(corsConfig));
+app.options("", cors(corsConfig));
+
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 
 app.use("/api/users", userRoutes);
@@ -30,17 +40,12 @@ app.use("/api/products", productRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/orders", orderRoutes);
 
+
 app.get("/api/config/paypal", (req, res) => {
-  res.send({ clientId: process.env.PAYPAL_CLIENT_ID });
+    res.send({ clientId: process.env.PAYPAL_CLIENT_ID });
 });
 
 const __dirname = path.resolve();
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/uploads", express.static(path.join(__dirname + "/uploads")));
 
-// Ако работите в режим на разработка, стартирайте сървъра нормално
-if (process.env.NODE_ENV !== "production") {
-  app.listen(port, () => console.log(`Server running on port: ${port}`));
-}
-
-// Ако сте в production, експортирайте като serverless функция
-export default serverless(app);
+app.listen(port, () => console.log(`Server running on port: ${port}`));
