@@ -28,6 +28,7 @@ import ProductDetails from "./pages/Products/ProductDetails.jsx";
 import Cart from "./pages/Cart.jsx";
 import Shop from "./pages/Shop.jsx";
 import Shipping from "./pages/Orders/Shipping.jsx";
+import Banlist from "./pages/BanList.jsx";
 import PlaceOrder from "./pages/Orders/PlaceOrder.jsx";
 
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
@@ -47,6 +48,7 @@ const router = createBrowserRouter(
       <Route path="/product/:id" element={<ProductDetails />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/shop" element={<Shop />} />
+      <Route path="/banlist" element={<Banlist />} />
       <Route path="/user-orders" element={<UserOrder />} />
 
       <Route path="" element={<PrivateRoute />} >

@@ -5,6 +5,7 @@ import {
     AiOutlineLogin,
     AiOutlineUserAdd,
     AiOutlineShoppingCart,
+    AiTwotoneWarning,
 } from "react-icons/ai";
 import { FaHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -122,6 +123,14 @@ const Navigation = () => {
                 <span className="nav-item-name mt-[3rem] ml-2">ЛЮБИМИ</span>
               </div>
               <FavoritesCount />
+            </Link>
+
+            <Link 
+              to="/banlist"
+              className="flex items-center transition-transform transform hover:translate-x-2 group"
+            >
+              <AiTwotoneWarning className="mr-2 mt-[3rem]" size={26} />
+              <span className="nav-item-name mt-[3rem] ml-2">БАНЛИСТ</span>
             </Link>
           </div>
     
