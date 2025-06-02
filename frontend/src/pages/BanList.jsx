@@ -1,5 +1,3 @@
-// frontend/src/pages/Products/Banlist.jsx
-
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Loader from "../components/Loader";
@@ -60,7 +58,6 @@ const Banlist = () => {
 
   return (
     <div className="banlist-container bg-gray-900 text-white min-h-screen pt-20">
-      {/* Поставяме padding-top, за да придвижим цялото съдържание надолу */}
       <div className="banlist-content p-6 lg:pl-64">
         <h2 className="text-3xl font-bold text-pink-400 mb-6">
           Официален Banlist (TCG)
@@ -96,7 +93,6 @@ const Banlist = () => {
                     className="hover:bg-gray-800 transition-colors"
                   >
                     <td className="p-3 text-gray-200 break-words max-w-xs md:max-w-sm">
-                      {/* break-words, max-w, за да не се скрива зад навигацията */}
                       {card.name}
                     </td>
                     <td className="p-3">
