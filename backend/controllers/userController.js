@@ -6,18 +6,53 @@ import createToken from "../utils/createToken.js";
 const createUser = asyncHandler(async (req, res) => {
     const {username, email, password} = req.body;
 
-
+    // Validation: Check if all fields are filled
     if (!username || !email || !password){
         throw new Error("Please fill all the inputs.");
     }
 
-    const userExists = await User.findOne({ email });
+    // Validation: Trim whitespace from inputs
+    const trimmedUsername = username.trim();
+    const trimmedEmail = email.trim().toLowerCase();
+    const trimmedPassword = password;
+
+    // Validation: Username length (3-30 characters)
+    if (trimmedUsername.length < 3) {
+        throw new Error("Username must be at least 3 characters long.");
+    }
+    if (trimmedUsername.length > 30) {
+        throw new Error("Username must not exceed 30 characters.");
+    }
+
+    // Validation: Username format (allow letters, numbers, underscores, hyphens and spaces between names)
+    const usernameRegex = /^[a-zA-Z0-9 _-]+$/;
+    if (!usernameRegex.test(trimmedUsername)) {
+        throw new Error("Username can only contain letters, numbers, spaces, underscores, and hyphens.");
+    }
+
+    // Validation: Email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(trimmedEmail)) {
+        throw new Error("Please provide a valid email address.");
+    }
+
+    // Validation: Password length (minimum 6 characters)
+    if (trimmedPassword.length < 6) {
+        throw new Error("Password must be at least 6 characters long.");
+    }
+
+    // Validation: Password strength (must include at least one of: number, lowercase, or uppercase)
+    if (!(/[0-9]/.test(trimmedPassword) || /[a-z]/.test(trimmedPassword) || /[A-Z]/.test(trimmedPassword))) {
+        throw new Error("Password must contain at least one number, lowercase letter, or uppercase letter.");
+    }
+
+    const userExists = await User.findOne({ email: trimmedEmail });
     if(userExists) res.status(400).send("User already exists");
 
     const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const hashedPassword = await bcrypt.hash(trimmedPassword, salt);
 
-    const newUser = new User({username, email, password: hashedPassword});
+    const newUser = new User({username: trimmedUsername, email: trimmedEmail, password: hashedPassword});
 
     try {
       await newUser.save();
@@ -95,12 +130,46 @@ const updateCurrentUserProfile = asyncHandler(async (req, res) => {
     const user = await User.findById(req.user._id);
 
     if (user) {
-        user.username = req.body.username || user.username;
-        user.email = req.body.email || user.email;
+        // Validate and apply username if provided
+        if (req.body.username) {
+            const trimmedUsername = req.body.username.trim();
 
+            if (trimmedUsername.length < 3) {
+                throw new Error("Username must be at least 3 characters long.");
+            }
+            if (trimmedUsername.length > 30) {
+                throw new Error("Username must not exceed 30 characters.");
+            }
+            const usernameRegex = /^[a-zA-Z0-9 _-]+$/;
+            if (!usernameRegex.test(trimmedUsername)) {
+                throw new Error("Username can only contain letters, numbers, spaces, underscores, and hyphens.");
+            }
+
+            user.username = trimmedUsername;
+        }
+
+        // Validate and apply email if provided
+        if (req.body.email) {
+            const trimmedEmail = req.body.email.trim().toLowerCase();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(trimmedEmail)) {
+                throw new Error("Please provide a valid email address.");
+            }
+            user.email = trimmedEmail;
+        }
+
+        // Validate and apply password if provided
         if (req.body.password) {
+            const trimmedPassword = req.body.password;
+            if (trimmedPassword.length < 6) {
+                throw new Error("Password must be at least 6 characters long.");
+            }
+            if (!(/[0-9]/.test(trimmedPassword) || /[a-z]/.test(trimmedPassword) || /[A-Z]/.test(trimmedPassword))) {
+                throw new Error("Password must contain at least one number, lowercase letter, or uppercase letter.");
+            }
+
             const salt = await bcrypt.genSalt(10);
-            const hashedPassword = await bcrypt.hash(req.body.password, salt);
+            const hashedPassword = await bcrypt.hash(trimmedPassword, salt);
             user.password = hashedPassword;
         }
 
@@ -152,8 +221,34 @@ const updateUserById = asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id);
 
     if (user) {
-        user.username = req.body.username || user.username;
-        user.email = req.body.email || user.email;
+        // Validate and apply username if provided
+        if (req.body.username) {
+            const trimmedUsername = req.body.username.trim();
+
+            if (trimmedUsername.length < 3) {
+                throw new Error("Username must be at least 3 characters long.");
+            }
+            if (trimmedUsername.length > 30) {
+                throw new Error("Username must not exceed 30 characters.");
+            }
+            const usernameRegex = /^[a-zA-Z0-9 _-]+$/;
+            if (!usernameRegex.test(trimmedUsername)) {
+                throw new Error("Username can only contain letters, numbers, spaces, underscores, and hyphens.");
+            }
+
+            user.username = trimmedUsername;
+        }
+
+        // Validate and apply email if provided
+        if (req.body.email) {
+            const trimmedEmail = req.body.email.trim().toLowerCase();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(trimmedEmail)) {
+                throw new Error("Please provide a valid email address.");
+            }
+            user.email = trimmedEmail;
+        }
+
         user.isAdmin = Boolean(req.body.isAdmin);
 
         const updatedUser = await user.save();
