@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config({ path: "./backend/.env" });
+import dns from "dns";
+dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
 
 const connectDB = async () => {
